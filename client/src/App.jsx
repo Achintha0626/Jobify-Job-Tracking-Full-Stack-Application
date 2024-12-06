@@ -1,19 +1,18 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
-  HomeLayout,Landing,Register,Login,DashboardLayout,Error
+  HomeLayout,Landing,Register,Login,DashboardLayout,Error,AddJob,Stats,AllJobs,Profile,Admin
 } from './pages'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout />,
-    errorElement: <Error/>,
+    errorElement: <Error />,
     children: [
       {
-        index:true,
-        element:<Landing/>
-
+        index: true,
+        element: <Landing />,
       },
       {
         path: "register",
@@ -26,6 +25,28 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        children: [
+          {
+            index: true, //This tells React Router that the component should be rendered by default when the user visits the parent path (/dashboard in this case)
+            element: <AddJob />,
+          },
+          {
+            path: "stats",
+            element: <Stats />,
+          },
+          {
+            path: "all-jobs",
+            element: <AllJobs />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "admin",
+            element: <Admin />,
+          },
+        ],
       },
     ],
   },
