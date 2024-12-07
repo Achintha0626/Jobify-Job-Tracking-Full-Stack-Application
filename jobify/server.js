@@ -51,6 +51,17 @@ app.post("/api/v1/jobs", (req, res) => {
   // console.log(id);
   const job = { id, company, position };
   jobs.push(job);
+  res.status(201).json({ job });
+});
+
+
+//Get Single Job
+app.get("/api/v1/jobs/:id", (req, res) => {
+  const { id } = req.params;
+  const job = jobs.find((job) => job.id === id);
+  if (!job) {
+    return res.status(404).json({ msg: `no job with id ${id}` });
+  }
   res.status(200).json({ job });
 });
 
