@@ -38,6 +38,7 @@ app.post("/", (req, res) => {
 
 //Get All jobs
 app.get('/api/v1/jobs',(req,res)=>{
+  
   res.status(200).json({jobs})
 })
 
@@ -95,6 +96,18 @@ app.delete('/api/v1/jobs/:id', (req, res) => {
 
   res.status(200).json({ msg: 'job deleted' });
 });
+
+
+app.use('*',(req,res)=>{
+  //This middleware catches any requests that don't match any existing routes
+  res.status(404).json({ msg: "not fond" });
+})
+
+app.use((err,req,res,next)=>{
+  //This middleware is for catching errors that happen during request processing.
+  console.log(err);
+  res.status(500).json({ msg: "something went wrong" });
+})
 
 
 const port=process.env.PORT || 5100
