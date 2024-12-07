@@ -1,18 +1,33 @@
+import * as dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 
-const app=express()
+const app = express();
 
-app.use(express.json())
+import morgan from "morgan";
 
-app.get('/',(req,res)=>{
-  res.send('Hello World')
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+
+
+app.use(morgan("dev"));
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });
 
-app.post('/',(req,res)=>{
+app.post("/", (req, res) => {
   console.log(req);
-  res.json({message:'data recived',data: req.body})
-})
+  res.json({ message: "data recived", data: req.body });
+});
 
-app.listen(5100,()=>{
-  console.log('Server Running...')
-})
+const port=process.env.PORT || 5100
+
+app.listen(port, () => {
+  console.log(`Server Running on PORT ${port}...`);
+});
