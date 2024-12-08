@@ -26,20 +26,27 @@ export const action = async ({ request }) => {
   
 };
 const Register = () => {
+
+  const navigation=useNavigation()
+  console.log(navigation)
+  const isSubmitting=navigation.state==='submitting'
+
+
+
   return (
     <Wrapper>
-      <Form method="post"  className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Register</h4>
- 
+
         <FormRow type="text" name="name" />
         <FormRow type="text" name="lastName" labelText="last name" />
         <FormRow type="text" name="location" />
         <FormRow type="text" name="email" />
         <FormRow type="password" name="password" />
 
-        <button type="submit" className="btn btn-block">
-          Submit
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting?'submitting...':'submit'}
         </button>
         <p>
           Already a Member?
