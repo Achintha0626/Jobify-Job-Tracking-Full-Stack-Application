@@ -1,4 +1,4 @@
-import { StatusCodes } from "http-status-codes";
+import { OK, StatusCodes } from "http-status-codes";
 import User from '../models/UserModel.js'
 import bcrypt from "bcryptjs";
 import { UnauthenticatedError } from "../errors/customErrors.js";
@@ -25,5 +25,12 @@ export const login = async (req, res) => {
 
   const token=createJWT({userId:user._id, role:user.role});
  
-  res.json({token});
+  const oneDay=1000*60*60*24;
+
+  res.cookie('token', token,{
+    httpOnly:true,
+    expires: new Date(Date.now()+ oneDay),
+    secure: process.env.NODE_ENV==='production',
+  })
+  res.status(StatusCodes.OK).json({msg: 'user logged in'})
 };
