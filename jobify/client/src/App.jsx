@@ -7,6 +7,7 @@ import {
 import {action as registerAction} from './pages/Register'
 import { action as loginAction } from "./pages/Login";
 import {loader as dashboardLoader} from "./pages/DashboardLayout"
+import { action as addJobAction } from "./pages/AddJob";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
           {
             index: true, //This tells React Router that the component should be rendered by default when the user visits the parent path (/dashboard in this case)
             element: <AddJob />,
+            action:addJobAction,
           },
           {
             path: "stats",
