@@ -1,24 +1,36 @@
 import React, { createContext, useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect, useLoaderData } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Dashboard";
 import { BigSidebar, Navbar, SmallSidebar } from "../components";
 import { checkDefaultTheme } from "../App";
+import customFetch from "../utils/customFetch";
+
+export const loader= async()=>{
+  try {
+    const {data} =await customFetch.get('users/current-user')
+    return data;
+  } catch (error) {
+    return redirect('/')
+
+    
+  }
+}
 
 const DashboardContext = createContext();
 
 
 
-const DashboardLayout = () => {
-  // temp
-  const user = { name: "Achintha" };
+const DashboardLayout = ({ isDarkThemeEnabled }) => {
+  const {user} = useLoaderData();
+  
   const [showSidebar, setShowSidebar] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
+  const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
 
   const toggleDarkTheme = () => {
-    const newDarkTheme=!isDarkTheme
-    setIsDarkTheme(newDarkTheme) //change the button
-     document.body.classList.toggle("dark-theme", newDarkTheme);
-     localStorage.setItem("darkTheme", newDarkTheme);
+    const newDarkTheme = !isDarkTheme;
+    setIsDarkTheme(newDarkTheme); //change the button
+    document.body.classList.toggle("dark-theme", newDarkTheme);
+    localStorage.setItem("darkTheme", newDarkTheme);
   };
 
   const toggleSidebar = () => {
@@ -46,10 +58,11 @@ const DashboardLayout = () => {
           <BigSidebar />
           <div>
             <Navbar />
-            <div className="dashboard-page">{/* Your content here */}</div>
+            <div className="dashboard-page">
+              <Outlet context={{user}}/>
+            </div>
           </div>
         </main>
-        <Outlet />
       </DashboardContext.Provider>
     </Wrapper>
   );

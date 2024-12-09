@@ -6,6 +6,7 @@ import {
 
 import {action as registerAction} from './pages/Register'
 import { action as loginAction } from "./pages/Login";
+import {loader as dashboardLoader} from "./pages/DashboardLayout"
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem("darkTheme") === "true";
@@ -35,11 +36,12 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
-        action:loginAction
+        action: loginAction,
       },
       {
         path: "dashboard",
         element: <DashboardLayout />,
+        loader: dashboardLoader,
         children: [
           {
             index: true, //This tells React Router that the component should be rendered by default when the user visits the parent path (/dashboard in this case)

@@ -1,8 +1,12 @@
 import React from 'react'
+import Wrapper from '../assets/wrappers/JobInfo'
 
 const AddJob = () => {
   return (
-    <h1>AddJob Page</h1>
+    <Wrapper> 
+        <h1>add jobs</h1>
+      </Wrapper> 
+
   )
 }
 
