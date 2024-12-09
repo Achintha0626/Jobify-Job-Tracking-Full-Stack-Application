@@ -1,7 +1,6 @@
 import React from "react";
 
-
-const FormRow = ({ type, name, labelText }) => {
+const FormRow = ({ type, name, labelText, defaultValue }) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -12,6 +11,7 @@ const FormRow = ({ type, name, labelText }) => {
         id={name}
         name={name}
         className="form-input"
+        defaultValue={defaultValue} // Set defaultValue here to pre-populate the input field
         required
       />
     </div>
